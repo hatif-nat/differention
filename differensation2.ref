@@ -1,0 +1,273 @@
+Diffur start
+ entry go
+ extrn ADD, PRINT, CARD, M1, PROUT, SUB, NUMB, MUL
+
+go = <PRINT<output <PRINT <input <CARD 'Enter diferencial string: '>>>>>
+
+
+
+
+
+
+input 'D'S(L)x E(LD)y':'e2 = <found_variable (Sx Ey) e2>
+              e1 = <PRINT 'its not good string. Try enter D(variable):string '>
+
+found_variable (e1)e2e1e3 = <Simple <Simple <PROUT 'BBBBBBBBBBBBB'> <PRINT <RemoveSymbols <PRINT <OpenBrackets <PRINT <OnlyDiff <PRINT <ParseVir (e1) <replaceBrakets <BracketToPow e2e1e3>>>>>>>>>>>>
+                e1 = <Print 'dont have variable in parcing string'>
+              
+BracketToPow e1'^'v(D)2 s((D))3 e4 = e1'^'( v2)<BracketToPow s3e4>
+             e1'^'s('-+')2 v(D)3 s((D))4 e5 = e1'^'( s2v3)<BracketToPow s4e5>
+             e1'^'v(D)2  = e1'^'( v2)
+             e1'^'s('-+')2 v(D)3  = e1'^'(s2v3)
+             e1'^'e2 = <PRINT 'error use pow'>
+             e1 = e1
+
+replaceBrakets L e1')'e2 = <replaceBrakets<Skob e1>e2>
+               L e1'('e2 = <PRINT 'incorrect brackets place. Try again'>
+                 e1 = e1
+               
+Skob R e1'('e2 = e1(e2)
+       e1 = <PRINT 'incorrect brackets place. Try again'>
+       
+ParseVir R (e0) e1 s('+-')2 e3 = <PlusMinus (e0)(<ParseVir  (e0)<PRINT <PROUT 'before plusMinus: '>e1>>)(<ParseSlag (e0)<PRINT <PROUT 'after plusMinus: '>e3>>) s2>
+           (e0) e1 = <helpOneSlag <ParseSlag (e0) <PRINT <PROUT 'pSlag: '> e1>>>
+           
+helpOneSlag (e1)(e2) = (<ProcSlag e1>) (<ProcSlag e2>)
+           
+ParseSlag R (e0) e1 s('*/')2 e3 = <MulDiv (e0) (<ParseSlag (e0) <Print <PROUT 'before MulDiv: '>e1>>)(<ParseMnoz (e0) <Print <PROUT 'after MulDiv: '>e3>>) s2>
+            (e0) e1 = <helpOneMnoz <ParseMnoz (e0) <PRINT <PROUT 'pMnoz: '>e1>>>
+            
+helpOneMnoz (e1)(e2) = (<ProcMnoz e1>)(<ProcMnoz e2>)
+            
+ParseMnoz (e0)e0 = <PRINT ((e0)) <PROUT ' differ: '> ((/1/))>
+          (e0)v(D)1 = <PRINT ((<MyNUMB v1>)) <PROUT ' differ: '> ((/0/))>
+          (e0)S(L)x E(LD)y = <PRINT ((Sx Ey)) <PROUT ' differ: '> ((/0/))>
+          (e0)e0 '^'(e1) = <PRINT (((e0)'^'(<MyNUMB e1>))) <PROUT ' differ: '> ((<MyNUMB e1>)'*'((e0)'^'(<SUB (<PRINT <MyNUMB e1> >) /1/>)))>
+          (e0)S(L)x E(LD)y'^'(e1) = <PRINT (((Sx Ey) '^' (<MyNUMB e1>))) <PROUT ' differ: '> ((/0/))>
+          (e0)'sin'(e1) = <DifFunction 'sin'(<ParseVir (e0) e1>) >
+          (e0)'cos'(e1) = <DifFunction 'cos'(<ParseVir (e0) e1>) >
+          (e0)'ln'(e1) = <DifFunction 'ln'(<ParseVir (e0) e1>) >
+          (e0)'exp'(e1) = <DifFunction 'exp'(<ParseVir (e0) e1>) >
+          (e0)'sqrt'(e1) = <DifFunction 'sqrt'(<ParseVir (e0) e1>)>
+          (e0)'arcsin'(e1) = <DifFunction 'arcsin'(<ParseVir (e0) e1>)>
+          (e0)'arccos'(e1) = <DifFunction 'arccos'(<ParseVir (e0) e1>)>
+          (e0)(e1) = <ParseVir (e0) e1>
+          (e0)(e2)'^'(e1) = <DifFunction <PROUT 'here 1 '> <PRINT (<ParseVir (e0) e2>)'^'(<MyNUMB e1>)>>
+          (e0)e1 = <PRINT 'Mnozhitel incorrect'>          
+
+DifFunction 'sin'((e1)(e2)) = <PRINT (('sin'(e1))) <PROUT ' differ: '> ((e2)'*'('cos'(e1)))>
+            'cos'((e1)(e2)) = <PRINT (('cos'(e1))) <PROUT ' differ: '> (('-'/1/)'*'(e2)'*'('sin'(e1)))>
+            'ln'((e1)(e2)) = <PRINT (('ln'(e1))) <PROUT ' differ: '> ((e2)'*'((e1)'^'('-'/1/)))>
+            'exp'((e1)(e2)) = <PRINT (('exp'(e1))) <PROUT ' differ: '> ((e2)'*'('exp'(e1)))>
+            'sqrt'((e1)(e2)) = <PRINT (('sqrt'(e1))) <PROUT ' differ: '> ((e2)'*'((/2/)'^'('-'/1/))'*'(('sqrt'(e1))'^'('-'/1/)))>
+            'arcsin'((e1)(e2)) = <PRINT (('arcsin'(e1))) <PROUT ' differ: '> ((e2)'*'(('sqrt'(((/1/))'+'(('-'/1/)'*'((e1)'^'(/2/)))))'^'('-'/1/)))>
+            'arccos'((e1)(e2)) = <PRINT (('arccos'(e1))) <PROUT ' differ: '> (('-'/1/)'*'(e2)'*'(('sqrt'(((/1/))'+'(('-'/1/)'*'((e1)'^'(/2/)))))'^'('-'/1/)))>
+            ((e1)(e2))'^'(e3) = <PROUT 'here 2 '><PRINT (((e1)'^'(<MyNUMB e3>))) <PROUT ' differ: '> ((e3)'*'(e2)'*'((e1)'^'(<SUB (<MyNUMB e3>) /1/ >)))>
+            
+MyNUMB s(D)1 e(D)2 = <NUMB s1e2>
+       s('+-')1 e(D)2 = <NUMB s1e2>
+       s(N)1 = s1
+       s('+-')1 s(N)2 = s1 s2
+PlusMinus (e0) ((e1 s('+-')5 e6)(e2 s('+-')7 e8))((e3)(e4))'+' =<PRINT <PROUT ' after PlusMinus: '>( e1 s5 e6 '+' <ProcSlag e3>)(e2 s7 e8 '+' <ProcSlag e4>)> 
+          (e0) ((e1)(e2))((e3)(e4))'+' =<PRINT <PROUT ' result PlusMinus: '>(<ProcSlag e1> '+'<ProcSlag e3>)(<ProcSlag e2>'+'<ProcSlag e4>)>
+          (e0) ((e1 s('+-')5 e6)(e2 s('+-')7 e8))((e3)(e4))'-' =<PRINT <PROUT ' result PlusMinus: '>(e1 s5 e6 '+' <MinusAll <ProcSlag e3>>)(e2 s7 e8 '+' <MinusAll <ProcSlag e4>>)>
+          (e0) ((e1)(e2))((e3)(e4))'-' =<PRINT <PROUT ' result PlusMinus: '>(<ProcSlag e1> '+'<MinusAll <ProcSlag e3>>)(<ProcSlag e2>'+'<MinusAll <ProcSlag e4>>)>
+
+MulDiv (e0) ((e1)(e2))((e3)(e4))'*' = <PRINT <PROUT ' after MulDiv: '>((<ProcMnoz e1>'*'<ProcMnoz e3>))((<ProcMnoz e1>'*'<ProcMnoz e4>) '+' (<ProcMnoz e2>'*'<ProcMnoz e3>))>
+       (e0) ((e1)(e2))((e3)(e4))'/' = <PRINT <PROUT ' after MulDiv: '>((<ProcMnoz e1> '*' ((<ProcSlag e3>)'^'('-'/1/))))((<ProcMnoz e2>'*'((<ProcSlag e3>)'^'('-'/1/))) '+' ((('-'/1/)'^'(/1/))'*'<ProcMnoz e1> '*' <ProcMnoz e4>'*' ((<ProcSlag e3>) '^' ('-'/2/))))>
+           
+ProcSlag (e1) = <ProcSlag e1>
+         R e1 s('+-')2 e3 = <ProcSlag e1> '+' <NeedMinus s2 <ProcSlag e3>>
+         e1 = (<ProcMnoz e1>)
+         
+ProcMnoz (e1) = <ProcMnoz e1>
+         R e1 '*' e2 = <ProcMnoz e1> '*' <ProcMnoz e2>
+         e('+-')3 s(N)2 = ((e3 s2)'^'(/1/))
+         (e('+-')4 s(N)5) '^'(e('+-')3 s(N)2) = ((e4 s5)'^'(e3 s2))
+         v(D)1 = ((v1)'^'(/1/))
+         (v(D)1) '^'(e('+-')3 s(N)2) = ((v1)'^'(e3 s2))
+         S(L)x E(LD)y = ((Sx Ey)'^'(/1/))
+         (S(L)x E(LD)y) '^'(e('+-')3 s(N)2) = ((Sx Ey)'^'(e3 s2))
+         'sin'(e1) = (('sin'(<ProcSlag e1>))'^'(/1/))
+         ('sin'(e1))'^'(e('+-')3 s(N)2) = (('sin'(<ProcSlag e1>))'^'(e3 s2))
+         'cos'(e1) = (('cos'(<ProcSlag e1>))'^'(/1/))
+         ('cos'(e1))'^'(e('+-')3 s(N)2) = (('cos'(<ProcSlag e1>))'^'(e3 s2))
+         'ln'(e1) = (('ln'(<ProcSlag e1>))'^'(/1/))
+         ('ln'(e1))'^'(e('+-')3 s(N)2) = (('ln'(<ProcSlag e1>))'^'(e3 s2))
+         'exp'(e1) = (('exp'(<ProcSlag e1>))'^'(/1/))
+         ('exp'(e1))'^'(e('+-')3 s(N)2) = (('exp'(<ProcSlag e1>))'^'(e3 s2))
+         'sqrt'(e1) = (('sqrt'(<ProcSlag e1>))'^'(/1/))
+         ('sqrt'(e1))'^'(e('+-')3 s(N)2) = (('sqrt'(<ProcSlag e1>))'^'(e3 s2))
+         'arcsin'(e1) = (('arcsin'(<ProcSlag e1>))'^'(/1/))
+         ('arcsin'(e1))'^'(e('+-')3 s(N)2) = (('arcsin'(<ProcSlag e1>))'^'(e3 s2))
+         'arccos'(e1) = (('arccos'(<ProcSlag e1>))'^'(/1/))
+         ('arccos'(e1))'^'(e('+-')3 s(N)2) = (('arccos'(<ProcSlag e1>))'^'(e3 s2))
+         (e1)'^'(e('+-')3 s(N)2) =<tryOpenPows <PRINT <RedusePows (e3 s2) (<ProcSlag e1>)>>>
+         e1 = <tryOpenPows <PRINT <RedusePows (/1/)(<ProcSlag e1>)>>>
+
+NeedMinus '+' e1 = e1
+          '-' e1 = <MinusAll e1>
+          
+MinusAll R e1 '+' (e2) = <MinusAll e1> '+' ((('-'/1/)'^'(/1/))'*' e2)
+           (e1) = ((('-'/1/)'^'(/1/))'*'e1)
+
+OnlyDiff (e1)(e2) = <PROUT 'after diff'>(e2)
+
+
+
+
+
+
+tryOpenPows ((e2)'^'(/2/)) = ((<OpenSquare (e2) (e2)>)'^'(/1/))
+          R e1 '*' ((e2)'^'(/2/)) e3 = <tryOpenPows e1> '*' ((<OpenSquare (e2) (e2)>)'^'(/1/)) e3
+            ((e2)'^'(/2/)) '*' e1 = <tryOpenPows e1> '*' ((<OpenSquare (e2) (e2) >)'^'(/1/))
+            e1 = e1
+            
+OpenSquare R (e1 '+' (e2))(e3 '+'(e4)) = <OpenSquare (e1) (e1)> '+' <OpenSquare ((e2)) (e3)> '+' <OpenSquare (e1) ((e4))> '+' (e2 '*' e4)
+           R (e1 '+' (e2))((e4)) = <OpenSquare (e1) ((e4))> '+' (e2 '*' e4)
+           R ((e2))(e3 '+' (e4)) = <OpenSquare ((e2)) (e3)>  '+' (e2 '*' e4)
+           R ((e2))((e4)) = (e2 '*' e4)
+         
+RedusePows (e1) ((((e2)'^'(e('+-')3 s(N)4)))) = ((e2)'^'(<MUL (e1) e3 s4>))
+         R (e1) ((e0 '*'((e2)'^'(e('+-')3 s(N)4)))) = <RedusePows (e1) ((e0))> '*' ((e2)'^'(<MUL (e1) e3 s4>))
+         R (e1) ((((e2)'^'(e('+-')3 s(N)4))'*' e0)) = <RedusePows (e1) ((e0))> '*' ((e2)'^'(<MUL (e1) e3 s4>))
+         R (e1) ((e6 '*' ((e2)'^'(e('+-')3 s(N)4))'*' e0)) = <RedusePows (e1) ((e6))> '*' <RedusePows (e1) ((e0))> '*' ((e2)'^'(<MUL (e1) e3 s4>))
+           (e1) (e2) = ((e2)'^'(e1))
+
+
+
+
+
+
+OpenBrackets (e1) =<PROUT 'after open brackets'> (<ForEverySlag e1>)
+
+ForEverySlag R e1 '+' (e2) = <ForEverySlag e1> '+' <ForMnozs e2>
+               (e1) = <ForMnozs e1>
+               
+ForMnozs R e1 '*' ((e3 '+' e2)'^'(/1/)) = <ForEverySlag <NeedOpenBrackets (e1) (e3 '+' e2)>>
+         R e1 '*' ((e3 '+' e2)'^'(/1/)) '*' e4= <ForEverySlag <NeedOpenBrackets (e1'*' e4) (e3 '+' e2)>>
+         R ((e3 '+' e2)'^'(/1/)) '*' e4= <ForEverySlag <NeedOpenBrackets (e4) (e3 '+' e2)>>
+           ((e3 '+' e2)'^'(/1/)) = <ForEverySlag e3 '+' e2 >
+           e1 ((e2)'^'(e4)) e3 = (<ForOneMnoz e1 ((e2)'^'(e4)) e3>)
+
+ForOneMnoz R e1 '*' (e2) = <ForOneMnoz e1> '*' <OneMnoz (e2)>
+             (e1) = <OneMnoz (e1)>
+
+OneMnoz ((e('+-')1 s(N)2)'^'(e3)) = ((e1 s2)'^'(e3))
+        ((S(L)x E(LD)y)'^'(e3)) = ((Sx Ey)'^'(e3))
+        ((S(L)x E(L)y (e0))'^'(e3)) = ((Sx Ey <OpenBrackets (e0)>)'^'(e3))
+        ((e0)'^'(e3)) = (<OpenBrackets (e0)>'^'(e3))
+           
+NeedOpenBrackets R (e1)(e2 '+' (e3)) = (e1'*'e3)'+'<NeedOpenBrackets (e1) (e2)>
+                   (e1)((e2)) = (e1 '*' e2)
+
+
+
+
+
+
+
+RemoveSymbols (e1) = <PROUT 'without mulPlus'>(<RemovePlus e1>)
+              e1 = e1
+
+RemovePlus R e1 '+' (e2) = <RemovePlus e1> (<RemoveMul e2>)
+             (e1) = (<RemoveMul e1>)
+             e1 = e1
+             
+RemoveMul R e1 '*' ((e2)'^'(e3)) = <RemoveMul e1> ((<AnalizeMnoz e2>)'^'(e3))
+            ((e2)'^'(e3)) = ((<AnalizeMnoz e2>)'^'(e3))
+
+AnalizeMnoz e('+-')1 s(N)2 = e1 s2
+            S(L)x E(LD)y = Sx Ey
+            S(L)x E(L)y (e0) = Sx Ey (<RemovePlus e0>)
+            e0 = <RemovePlus e0>
+
+
+
+
+
+Simple (e1) = <PROUT '1'>(<SimpleVir <PROUT 'simple ' <SimpleSlags e1>> <PRINT <SimpleSlags <PRINT e1>>>>)
+       e1 = <PROUT '2'><PROUT 'some strange'>e1
+
+SimpleVir  = (((/0/)'^'(/1/)))
+          e1 () e2 = <SimpleVir e1 e2>
+          e1 (e2) e5 (e2) e8 = <SimpleVir <SimpleSlags e1 (((/2/)'^'(/1/)) e2) e5 e8>>
+          e1 (e2) (e3) = <IsChanged <TryAll e1 (e2)(e3) >>
+          e1 = e1
+
+TryAll R e1 (e2) (e3) = <Analize e1 (e2) (e3) <CanConcatenate <PROUT 'concan ' (e2) (e3) ()> (e2) (e3) ()>>
+
+Analize e1 (e2) (e3)('Yes') (e4) = ('Yes') e1 (e4)
+        (e2) (e3) ('No') (e4) (e5) = ('No') (e2) (e3)
+      R e0 (e1) (e2) (e3) ('No') (e4) (e5) = ('No') e0 (e1) (e2) (e3)
+
+
+IsChanged ('Yes') e1 = <SimpleVir <PRINT <SimpleSlags e1>>>
+          ('No') e1 = e1
+
+CanConcatenate (e1 ((e('+-')7 s(N)8)'^'(e9)) e3)(e4 ((e('+-')7 s(N)8)'^'(e9)) e5) (e0) = <CanConcatenate (e1 e3)(e4 e5) (e0 ((e7 s8)'^'(e9)))>
+               (e1 ((S(L)x E(LD)y)'^'(e8)) e3)(e4 ((S(L)x E(LD)y)'^'(e8)) e5) (e0) = <CanConcatenate (e1 e3)(e4 e5) (e0 ((Sx Ey)'^'(e8)))>
+               (e1 ((S(L)x E(L)y (e7))'^'(e8)) e3)(e4 ((S(L)x E(L)y (e7))'^'(e8)) e5) (e0) = <CanConcatenate (e1 e3)(e4 e5) (e0 ((Sx Ey (e7))'^'(e8)))>
+               (e1 ((e7)'^'(e8)) e3)(e4 ((e7)'^'(e8)) e5) (e0) = <CanConcatenate (e1 e3)(e4 e5) (e0 ((e7)'^'(e8)))>
+               (e1 (e2) e3)(e4 (e2) e5) (e0) = <CanConcatenate (e1 e3)(e4 e5) (e0 (e2))>
+               ()() (e1) = ('Yes')(((/2/)'^' (/1/)) e1 )
+               (((e('+-')1 s(N)2)'^'(/1/))) (((e('+-')4 s(N)5)'^'(/1/))) (e0) = ('Yes')(((<ADD (e1 s2) e4 s5 >)'^'(/1/)) e0)
+               (((e('+-')1 s(N)2)'^'(/1/))) () (e0) = ('Yes')(((<ADD (e1 s2) /1/ >)'^'(/1/)) e0)
+               () (((e('+-')4 s(N)5)'^'(/1/))) (e0) = ('Yes') (((<ADD (/1/) e4 s5 >)'^'(/1/)) e0)
+               (e1)(e2)(e3) = ('No') (e1 e3)(e2 e3)               
+
+SimpleSlags   (e2) = (<PRINT <PROUT 'SimpleSlags'><SimpleMnozs <SimpleEveryMnozIn e2>>>)
+              e1 (e2) = <SimpleSlags e1> (<PRINT <PROUT 'SimpleSlags'><SimpleMnozs <SimpleEveryMnozIn e2>>>)
+              e1 = <PROUT 'some strange 2' e1> e1
+              
+SimpleMnozs ((/1/)'^'(e7)) = ((/1/)'^'(/1/))
+            e1 ((/1/)'^'(e7)) e2 = <SimpleMnozs e1 e2>
+            e1 ((/0/)'^'(e7)) e2 =   
+            e1 ((e('+-')2 s(N)3)'^'(/1/)) e4 ((e('+-')5 s(N)6)'^'(/1/)) e7 = <SimpleMnozs ((<MUL (e2 s3) e5 s6 >)'^'(/1/)) e1 e4 e7>
+            e1 ((e2)'^'(e3)) e4 ((e2)'^'(e5)) e6 = <SimpleMnozs e1 e4 e6 ((e2)'^' (<ADD (e3) e5>))>
+            e1 =<PRINT <PROUT 'strange Mnoz'> e1 >
+
+SimpleEveryMnozIn  e8 ((e('+-')1 s(N)2)'^'('-'e3)) e9 = ((e1 s2)'^'('-' e3)) <SimpleEveryMnozIn e8> <SimpleEveryMnozIn e9>
+                   e8 ((e('+-')1 s(N)2)'^'(e3)) e9 = ((<ForNumRedusePow (e1 s2)(e3) >)'^'(/1/)) <SimpleEveryMnozIn e8> <SimpleEveryMnozIn e9>
+                   e8 ((S(L)x E(LD)y)'^'(e3)) e9 = ((Sx Ey)'^'(e3)) <SimpleEveryMnozIn e8> <SimpleEveryMnozIn e9>
+                   e8 ((S(L)x E(L)y (e0))'^'(e3)) e9 = ((Sx Ey <Simple (e0)>)'^'(e3)) <SimpleEveryMnozIn e8>  <SimpleEveryMnozIn e9>
+                   e8 ((e0)'^'(e3)) e9 = (<Simple (e0)>'^'(e3)) <SimpleEveryMnozIn e8>  <SimpleEveryMnozIn e9>
+                    = 
+
+ForNumRedusePow (e('+-')1 s(N)2) (/1/) = e1 s2
+                (e('+-')1 s(N)2) (/0/) = /1/ 
+                (e('+-')1 s(N)2) (e3) = <MUL (e1 s2) <ForNumRedusePow (e1 s2) (<SUB (e3) /1/>)>>
+                
+
+
+
+
+output ((e1)) = <PrintSlag e1>
+     R (e1(e2)) = <output (e1)> '+' <PrintSlag e2>
+       e1 = /0/
+       
+PrintSlag (e2) = <PrintMnoz e2>
+        R e1 (e2) = <PrintSlag e1>'*' <PrintMnoz e2>
+          e1 = /0/
+          
+PrintMnoz (e1)'^'(/1/) = <NeedBrackets e1>
+          (e1)'^'(s(N)2) = <NeedBrackets e1>'^'s2
+          (e1)'^'(e2) = <NeedBrackets e1>'^'(e2)
+
+NeedBrackets s(N)2 = s2
+             s('+-')1 s(N)2 = (s1 s2)
+             s(N)1 = s1
+             S(L)x E(LD)y = Sx Ey
+             'sin'(e1) = 'sin'(<output (e1)>)
+             'cos'(e1) = 'cos'(<output <PRINT (e1)>>)
+             'exp'(e1) = 'exp'(<output (e1)>)
+             'ln'(e1) = 'ln'(<output (e1)>)
+             'sqrt'(e1) = 'sqrt'(<output (e1)>)
+             'arccos'(e1) = 'arccos'(<output (e1)>)
+             'arcsin'(e1) = 'arcsin'(<output (e1)>)
+             e0 = (<output (e0)>)
+
+
+ end
+
+
